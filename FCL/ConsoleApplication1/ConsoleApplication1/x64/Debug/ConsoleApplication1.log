@@ -1,0 +1,9 @@
+﻿  ConsoleApplication1.cpp
+C:\Users\vlady\OneDrive\Рабочий стол\FCL\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(167,1): warning C4715: 'FunctionBlock_car::membership_speed_fast': not all control paths return a value
+C:\Users\vlady\OneDrive\Рабочий стол\FCL\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(200,1): warning C4715: 'FunctionBlock_car::membership_speed_change_reduce': not all control paths return a value
+C:\Users\vlady\OneDrive\Рабочий стол\FCL\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(183,1): warning C4715: 'FunctionBlock_car::membership_speed_change_increase': not all control paths return a value
+C:\Users\vlady\OneDrive\Рабочий стол\FCL\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(159,1): warning C4715: 'FunctionBlock_car::membership_distance_near': not all control paths return a value
+C:\Users\vlady\OneDrive\Рабочий стол\FCL\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(175,1): warning C4715: 'FunctionBlock_car::membership_speed_slow': not all control paths return a value
+C:\Users\vlady\OneDrive\Рабочий стол\FCL\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(192,1): warning C4715: 'FunctionBlock_car::membership_speed_change_keep': not all control paths return a value
+C:\Users\vlady\OneDrive\Рабочий стол\FCL\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(151,1): warning C4715: 'FunctionBlock_car::membership_distance_far': not all control paths return a value
+  ConsoleApplication1.vcxproj -> C:\Users\vlady\OneDrive\Рабочий стол\FCL\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
