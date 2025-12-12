@@ -20,14 +20,15 @@ DEFUZZIFY fan_speed
     TERM medium := (25, 0) (50, 1) (65, 0);
     TERM high := (50, 0) (75, 1) (85,0);
     TERM maximum := (80,0) (100,1);
-	METHOD : COA;
+	METHOD : COG;//LM,RM,COA
     DEFAULT := 0;
 END_DEFUZZIFY
 
 RULEBLOCK No1
-	AND : MIN;
-    ACT : MIN;
-    ACCU : MAX;
+    //AND : MIN;
+    OR : MAX;
+    ACT : MIN;//PROD
+    ACCU : MAX;//BSUM,NSUM
 
     RULE 1 : IF temperature IS cold THEN fan_speed IS low;
     RULE 2 : IF temperature IS comfortable THEN fan_speed IS medium;
