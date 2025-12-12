@@ -1,0 +1,143 @@
+FUNCTION_BLOCK LightControll
+
+VAR_INPUT
+    ambient_light : REAL;   // 0 - 100
+    time_of_day : REAL;     // 0 - 24
+END_VAR
+
+VAR_OUTPUT
+    lamp_brightness : REAL; // 0 - 100%
+END_VAR
+
+FUZZIFY ambient_light
+    TERM dark := (0, 1) (35, 0);
+    TERM dim := (20, 0) (40, 1) (70, 0);
+    TERM light:= (45,0) (75, 1) (90, 0);
+    TERM bright := (90, 0) (100, 1); //(75, 0.5) (100, 1);
+END_FUZZIFY
+
+FUZZIFY time_of_day
+    TERM night := (0,1) (6,0);
+    TERM morning := (5, 0) (9, 1) (12, 0);
+    TERM afternoon:= (11, 0) (14, 1) (17, 0);
+    TERM evening := (16,0) (20, 1) (23, 0);
+    TERM early_night := (22,0) (24,1);
+END_FUZZIFY
+
+DEFUZZIFY lamp_brightness
+    TERM off := (0, 1) (1, 0);
+    TERM low := (5, 0) (20, 1) (40, 0);
+    TERM medium := (30, 0) (60, 1) (75, 0);
+    TERM high := (65, 0) (100, 1);
+	METHOD : COA;
+    DEFAULT := 0;
+END_DEFUZZIFY
+
+RULEBLOCK No1
+	AND : MIN;
+    ACT : MIN;
+    ACCU : MAX;
+
+    RULE 1 : IF ambient_light IS dark AND time_of_day IS night THEN lamp_brightness IS high;
+    RULE 2 : IF ambient_light IS dark AND time_of_day IS evening THEN lamp_brightness IS high;
+    RULE 3 : IF ambient_light IS dark AND time_of_day IS afternoon THEN lamp_brightness IS medium;
+    RULE 4 : IF ambient_light IS dark AND time_of_day IS morning THEN lamp_brightness IS low;
+    RULE 5 : IF ambient_light IS dark AND time_of_day IS early_night THEN lamp_brightness IS high;
+
+    RULE 6 : IF ambient_light IS dim AND time_of_day IS night THEN lamp_brightness IS medium;
+    RULE 7 : IF ambient_light IS dim AND time_of_day IS evening THEN lamp_brightness IS medium;
+    RULE 8 : IF ambient_light IS dim AND time_of_day IS afternoon THEN lamp_brightness IS medium;
+    RULE 9 : IF ambient_light IS dim AND time_of_day IS morning THEN lamp_brightness IS low;
+    RULE 10 : IF ambient_light IS dim AND time_of_day IS early_night THEN lamp_brightness IS high;
+
+    RULE 11 : IF ambient_light IS light AND time_of_day IS night THEN lamp_brightness IS medium;
+    RULE 12 : IF ambient_light IS light AND time_of_day IS evening THEN lamp_brightness IS low;
+    RULE 13 : IF ambient_light IS light AND time_of_day IS afternoon THEN lamp_brightness IS low;
+    RULE 14 : IF ambient_light IS light AND time_of_day IS morning THEN lamp_brightness IS off;
+    RULE 15 : IF ambient_light IS light AND time_of_day IS early_night THEN lamp_brightness IS medium;
+
+    RULE 16 : IF ambient_light IS bright AND time_of_day IS night THEN lamp_brightness IS off;
+    RULE 17 : IF ambient_light IS bright AND time_of_day IS evening THEN lamp_brightness IS off;
+    RULE 18 : IF ambient_light IS bright AND time_of_day IS afternoon THEN lamp_brightness IS off;
+    RULE 19 : IF ambient_light IS bright AND time_of_day IS morning THEN lamp_brightness IS off;
+    RULE 20 : IF ambient_light IS bright AND time_of_day IS early_night THEN lamp_brightness IS off;
+    //RULE 16 : IF ambient_light IS bright AND time_of_day IS THEN lamp_brightness IS off;
+
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK
+
+FUNCTION_BLOCK LightControll
+
+VAR_INPUT
+    ambient_light : REAL;   // 0 - 100
+    time_of_day : REAL;     // 0 - 24
+END_VAR
+
+VAR_OUTPUT
+    lamp_brightness : REAL; // 0 - 100%
+END_VAR
+
+FUZZIFY ambient_light
+    TERM dark := (0, 1) (35, 0);
+    TERM dim := (20, 0) (40, 1) (70, 0);
+    TERM light:= (45,0) (75, 1) (95, 0);
+    TERM bright := (90, 0) (100, 1); //(75, 0.5) (100, 1);
+END_FUZZIFY
+
+FUZZIFY time_of_day
+    TERM night := (0,1) (6,0);
+    TERM morning := (5, 0) (9, 1) (12, 0);
+    TERM afternoon:= (11, 0) (14, 1) (17, 0);
+    TERM evening := (16,0) (20, 1) (22, 0);
+    TERM early_night := (21,0) (23,1);
+END_FUZZIFY
+
+DEFUZZIFY lamp_brightness
+    TERM off := (0, 1) (1, 0);
+    TERM low := (2, 0) (20, 1) (40, 0);
+    TERM medium := (30, 0) (60, 1) (75, 0);
+    TERM high := (65, 0) (100, 1);
+	METHOD : COA;
+    DEFAULT := 0;
+END_DEFUZZIFY
+
+RULEBLOCK No1
+	AND : MIN;
+    ACT : MIN;//PROD
+    ACCU : MAX;
+
+    RULE 1 : IF ambient_light IS dark AND time_of_day IS night THEN lamp_brightness IS high;
+    RULE 2 : IF ambient_light IS dark AND time_of_day IS evening THEN lamp_brightness IS high;
+    RULE 3 : IF ambient_light IS dark AND time_of_day IS afternoon THEN lamp_brightness IS high;
+    RULE 4 : IF ambient_light IS dark AND time_of_day IS morning THEN lamp_brightness IS medium;//dla obudzenia
+    RULE 5 : IF ambient_light IS dark AND time_of_day IS early_night THEN lamp_brightness IS high;
+
+    RULE 6 : IF ambient_light IS dim AND time_of_day IS night THEN lamp_brightness IS medium;//dla wypoczynku
+    RULE 7 : IF ambient_light IS dim AND time_of_day IS evening THEN lamp_brightness IS medium;//dla wypoczynku
+    RULE 8 : IF ambient_light IS dim AND time_of_day IS afternoon THEN lamp_brightness IS high;//dla pracy
+    RULE 9 : IF ambient_light IS dim AND time_of_day IS morning THEN lamp_brightness IS medium;  //dla pracy
+    RULE 10 : IF ambient_light IS dim AND time_of_day IS early_night THEN lamp_brightness IS medium;//low;//dla wypoczynku
+
+    RULE 11 : IF ambient_light IS light AND time_of_day IS night THEN lamp_brightness IS low;
+    RULE 12 : IF ambient_light IS light AND time_of_day IS evening THEN lamp_brightness IS low;
+    RULE 13 : IF ambient_light IS light AND time_of_day IS afternoon THEN lamp_brightness IS off;
+    RULE 14 : IF ambient_light IS light AND time_of_day IS morning THEN lamp_brightness IS off;
+    RULE 15 : IF ambient_light IS light AND time_of_day IS early_night THEN lamp_brightness IS low;
+
+    RULE 16 : IF ambient_light IS bright AND time_of_day IS night THEN lamp_brightness IS off;
+    RULE 17 : IF ambient_light IS bright AND time_of_day IS evening THEN lamp_brightness IS off;
+    RULE 18 : IF ambient_light IS bright AND time_of_day IS afternoon THEN lamp_brightness IS off;
+    RULE 19 : IF ambient_light IS bright AND time_of_day IS morning THEN lamp_brightness IS off;
+    RULE 20 : IF ambient_light IS bright AND time_of_day IS early_night THEN lamp_brightness IS off;
+    //RULE 16 : IF ambient_light IS bright AND time_of_day IS THEN lamp_brightness IS off;
+
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK
+
+    //TERM morning := (4, 0) (8, 1) (12, 0);
+    //TERM afternoon:= (11, 0) (13, 1) (15, 0);
+    //TERM evening := (14,0) (17, 1) (21, 0);
+    //TERM night := (20,0) (24,1) (4,0);
+
